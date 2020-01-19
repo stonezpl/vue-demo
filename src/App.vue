@@ -1,28 +1,56 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <!-- <hello msg="hello vue js"></hello>
+    <button @click="great('hello vue')">hello vue</button>
+    <input :value="message" type="text" @input="handleInput"/><span>{{message}}</span>
+    <input v-model="message" />
+    {{message}}
+    <rand></rand>
+    <div>{{httpMessage}}></div>
+    <Computed></Computed>
+    <Watch></Watch>
+    <Clock></Clock> -->
+    <Command></Command>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import Hello from "./components/Hello.vue";
+// import rand from "./components/rand.vue";
+import axios from "axios";
+// import Computed from "./components/Computed.vue";
+// import Watch from "./components/Watch.vue";
+// import Clock from "./components/Clock.vue"
+import Command from "./components/Command.vue"
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    // Hello,
+    // rand,
+    // Computed,
+    // Watch,
+    Command
+  },
+  methods: {
+    great: function(message) {
+      alert(message);
+    },
+    handleInput: function(e) {
+      this.message = e.target.value;
+    }
+  },
+  data() {
+    return {
+      message: "aaa",
+      httpMessage: ""
+    };
+  },
+  mounted() {
+    axios
+      .get("https://api.coindesk.com/v1/bpi/currentprice.json")
+      .then(response => (this.httpMessage = response));
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
